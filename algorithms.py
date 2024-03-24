@@ -10,14 +10,11 @@ class Algorithms:
         pass
     
     
-    def analyzePointPolygonPosition(self, q:QPointF, pol:QPolygonF):
-        
+    def analyze_point_polygon_position(self, q:QPointF, pol:QPolygonF):
         #Inicialize amount of intersections
         k = 0
-        
         #Amount of vertices
         n = len(pol)
-        
         #Process all segments
         for i in range(n):
             #Reduce coordinates
@@ -43,6 +40,11 @@ class Algorithms:
         
         #Point q outside polygon
         return 0
+
+
+
+
+
           
                    
                    

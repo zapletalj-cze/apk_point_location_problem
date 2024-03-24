@@ -39,6 +39,7 @@ class Ui_MainWindow(object):
         self.toolBar.setObjectName("toolBar")
         MainWindow.addToolBar(QtCore.Qt.ToolBarArea.TopToolBarArea, self.toolBar)
         self.actionOpen = QtGui.QAction(parent=MainWindow)
+        self.actionOpen.triggered.connect(self.openClick)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("images/icons/open_file.png"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
         self.actionOpen.setIcon(icon)
@@ -103,7 +104,9 @@ class Ui_MainWindow(object):
         
         
     def openClick(self):
-        pass
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*)")
+        if file_path:
+            print("Selected file:", file_path)
         
         
     def pointPolygonClick(self):
@@ -124,7 +127,7 @@ class Ui_MainWindow(object):
         
         #Run analysis
         a = Algorithms()
-        result = a.analyzePointPolygonPosition(q, pol)
+        result = a.analyze_point_polygon_position(q, pol)
         
         #Show results
         mb = QtWidgets.QMessageBox()
