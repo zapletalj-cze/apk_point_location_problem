@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>images/icons/about.png</file>
+    <file>images/icons/clear.png</file>
+    <file>images/icons/clear_all.png</file>
+    <file>images/icons/exit.png</file>
+    <file>images/icons/open_file.png</file>
+    <file>images/icons/pointpol.png</file>
+    <file>images/icons/ray.png</file>
+    <file>images/icons/winding.png</file>
+  </qresource>
+</RCC>
