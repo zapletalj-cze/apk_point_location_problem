@@ -13,8 +13,7 @@ from algorithms import *
 def set_widget_extent(self, extent):
     """
     Sets the widget's geometry to match the extent of the provided QPolygon.
-    :param extent:
-    :return:
+    :param extent: list - defines min max box as [xmin, ymin, xmax, ymax]
     """
     xmin, ymin, xmax, ymax = extent
     xmin = int(xmin)
@@ -127,12 +126,10 @@ class Ui_MainWindow(object):
         self.actionExit.triggered.connect(MainWindow.close)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-
     def openClick(self, filename):
         self.Canvas.widget_size = self.centralwidget.geometry()
         self.Canvas.gis_to_qt_polygons()
         # set_widget_extent(self, self.Canvas.extent)
-
 
     # function that adds a point or removes a point
     def pointClick(self):
@@ -150,21 +147,23 @@ class Ui_MainWindow(object):
         q = self.Canvas.getQ()
         polygons = self.Canvas.getPolygons()
         results = self.Canvas.getResults()
+        a = Algorithms()
         for index, polygon in enumerate(polygons):
-            a = Algorithms()
             result = a.analyze_point_polygon_position(q, polygon)
             results[index] = result
         self.Canvas.setResults(results)
+
     # function that runs winding number algorithm
     def windingNumberClick(self):
         # get data
         q = self.Canvas.getQ()
-        pols = self.Canvas.getPols()
-
-        # run analysis
+        polygons = self.Canvas.getPolygons()
+        results = self.Canvas.getResults()
         a = Algorithms()
-        result = a.windingNumberPols(q, pols)
-        self.Canvas.setResult(result)
+        for index, polygon in enumerate(polygons):
+            result = a.winding_number(q, polygon)
+            results[index] = result
+        self.Canvas.setResults(results)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

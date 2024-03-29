@@ -18,6 +18,7 @@ class Draw(QWidget):
         self.features = [None]
         self.min_max = [0, 0, 10, 10]
         self.results = []
+        self.extent = 4*[0]
 
 
     def shapely_to_qpolygonf(shape_polygon):
@@ -113,9 +114,7 @@ class Draw(QWidget):
             # draw polygon
             qp.drawPolygon(polygon)
 
-        qp.setPen(QPen(Qt.GlobalColor.black))
-        qp.setBrush(Qt.GlobalColor.red)
-        if self.add_vertex == True:
+        if self.add_vertex:
             # draw vertex
             r = 5
             qp.drawEllipse(int(self.q.x() - r), int(self.q.y() - r), 2 * r, 2 * r)
@@ -126,15 +125,14 @@ class Draw(QWidget):
     def setResults(self, results):
         """
         Updates self results obtained by algorithm and widget windows.
-        :param results: list of results [boolean]
-
+        :param results: list of results [int like]
         """
         self.results = results
         self.repaint()
 
     # function that adds a point or removes a point
     def switchDrawing(self):
-        self.add_vertex = not (self.add_vertex)
+        self.add_vertex = not self.add_vertex
         self.repaint()
 
     # function that returns analyzed point
