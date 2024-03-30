@@ -63,10 +63,12 @@ class Algorithms:
     @staticmethod
     def analyze_point_polygon_position(q: QPointF, pol: QPolygonF):
         """
-        Implementation fo Ray Crossing algorithm
+        Implementation of Ray Crossing algorithm
         :param q: QPointF
         :param pol: QPolygonF
-        :return: bool value as int (1 - point is within polygon, 0 - not within polygon)
+        :return 1 if the point is inside the polygon,
+        lies on the edge or is identical with one of the vertices,
+        0 otherwise.
         """
         # Initialize amount of intersections
         k = 0
@@ -74,6 +76,9 @@ class Algorithms:
         n = len(pol)
         # Process all segments
         for i in range(n):
+            # Check if point q is one of the vertices of the polygon
+            if q == pol[i]:
+                return 1
             # Reduce coordinates
             xir = pol[i].x() - q.x()
             yir = pol[i].y() - q.y()
@@ -85,6 +90,12 @@ class Algorithms:
                 # Right half plane
                 if xm > 0:
                     k += 1
+                elif xm == 0:
+                    # Check if q lies on the segment
+                    if min(pol[i].x(), pol[(i + 1) % n].x()) <= q.x() <= max(pol[i].x(), pol[(i + 1) % n].x()) and \
+                            min(pol[i].y(), pol[(i + 1) % n].y()) <= q.y() <= max(pol[i].y(), pol[(i + 1) % n].y()):
+                        return 1
+
         # Point q inside polygon?
         if k % 2 == 1:
             return 1
@@ -98,10 +109,15 @@ class Algorithms:
         :param q point as QPointF object
         :param pol polygon as QPolygonF object
         :param tolerance value from 2pi multiplied
-        :return 1 if the point is inside the polygon, 0 otherwise.
+        :return 1 if the point is inside the polygon,
+        lies on the edge or is identical with one of the vertices,
+        0 otherwise.
         """
         omega = 0
         for i in range(len(pol)):
+            # Check if point q is one of the vertices of the polygon
+            if q == pol[i]:
+                return 1
             xi, yi = pol[i].x(), pol[i].y()
             xj, yj = pol[(i + 1) % len(pol)].x(), pol[(i + 1) % len(pol)].y()
             dx1, dy1 = xi - q.x(), yi - q.y()

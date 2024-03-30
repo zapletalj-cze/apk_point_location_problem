@@ -16,7 +16,6 @@ class Draw(QWidget):
         self.add_vertex = False
         self.polygons = []
         self.features = [None]
-        self.min_max = [0, 0, 10, 10]
         self.results = []
         self.extent = 4*[0]
 
@@ -116,7 +115,15 @@ class Draw(QWidget):
 
         if self.add_vertex:
             # draw vertex
-            r = 5
+            pen = QPen(Qt.GlobalColor.red)
+            qp.setPen(pen)
+
+            brush = QBrush(Qt.GlobalColor.magenta)
+            brush.setStyle(Qt.BrushStyle.SolidPattern)
+            # Ensure solid brush for transparency
+            qp.setBrush(brush)
+            r = 10
+
             qp.drawEllipse(int(self.q.x() - r), int(self.q.y() - r), 2 * r, 2 * r)
 
         qp.end()
